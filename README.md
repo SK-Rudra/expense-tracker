@@ -10,6 +10,9 @@ The project is being developed to practise the complete software-development lif
 - Reusable HTML templates
 - Responsive frontend design
 - Expense summary landing page
+- SQLite development database
+- SQLAlchemy models for users, categories and transactions
+- Database schema migrations with Flask-Migrate and Alembic
 
 ## Planned Features
 
@@ -31,8 +34,11 @@ The project is being developed to practise the complete software-development lif
 - CSS
 - Jinja
 - Git and GitHub
-- PostgreSQL
 - Render
+- SQLAlchemy
+- SQLite for local development
+- Flask-Migrate and Alembic
+- PostgreSQL planned for production
 
 ## Running the Project Locally
 
