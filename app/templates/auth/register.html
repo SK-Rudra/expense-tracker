@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account | Expense Tracker{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-heading">
+            <p class="eyebrow">Get started</p>
+            <h1>Create your account</h1>
+            <p>
+                Start organising your income and expenses in one place.
+            </p>
+        </div>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(
+                    class="form-input",
+                    autocomplete="name",
+                    placeholder="Your full name"
+                ) }}
+
+                {% for error in form.name.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(
+                    class="form-input",
+                    autocomplete="email",
+                    placeholder="you@example.com"
+                ) }}
+
+                {% for error in form.email.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(
+                    class="form-input",
+                    autocomplete="new-password",
+                    placeholder="At least 8 characters"
+                ) }}
+
+                {% for error in form.password.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(
+                    class="form-input",
+                    autocomplete="new-password",
+                    placeholder="Enter the password again"
+                ) }}
+
+                {% for error in form.confirm_password.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {{ form.submit(
+                class="button primary-button full-width"
+            ) }}
+        </form>
+
+        <p class="auth-footer-text">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}">Log in</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

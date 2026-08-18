@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Expense Tracker{% endblock %}
+
+{% block content %}
+<section class="dashboard-shell">
+    <div class="dashboard-heading">
+        <div>
+            <p class="eyebrow">Private workspace</p>
+            <h1>Welcome, {{ current_user.name }}</h1>
+            <p>
+                Your financial overview will appear here.
+            </p>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <article class="metric-card">
+            <p>Total balance</p>
+            <h2>$0.00</h2>
+        </article>
+
+        <article class="metric-card">
+            <p>Monthly income</p>
+            <h2 class="income">$0.00</h2>
+        </article>
+
+        <article class="metric-card">
+            <p>Monthly expenses</p>
+            <h2 class="expense">$0.00</h2>
+        </article>
+    </div>
+
+    <div class="empty-state">
+        <h2>No transactions yet</h2>
+        <p>
+            Your recorded income and expenses will appear here.
+        </p>
+    </div>
+</section>
+{% endblock %}

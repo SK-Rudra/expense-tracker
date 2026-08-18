@@ -20,13 +20,57 @@
 
             <div class="nav-links">
                 <a href="{{ url_for('main.home') }}">Home</a>
-                <a href="#">Dashboard</a>
-                <a href="#">Login</a>
+
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                    <span class="nav-user">
+                        Hi, {{ current_user.name }}
+                    </span>
+
+                    <form
+                        class="logout-form"
+                        method="post"
+                        action="{{ url_for('auth.logout') }}"
+                    >
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+                        <button class="nav-button" type="submit">
+                            Log out
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}">Log in</a>
+
+                    <a
+                        class="nav-register"
+                        href="{{ url_for('auth.register') }}"
+                    >
+                        Create account
+                    </a>
+                {% endif %}
             </div>
         </nav>
     </header>
 
     <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack">
+                    {% for category, message in messages %}
+                        <div
+                            class="flash-message flash-{{ category }}"
+                            role="alert"
+                        >
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
 

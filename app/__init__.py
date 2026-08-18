@@ -2,7 +2,7 @@ from pathlib import Path
 
 from flask import Flask
 
-from app.extensions import db, migrate
+from app.extensions import csrf, db, login_manager, migrate
 from config import Config
 
 
@@ -14,10 +14,14 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
-    from app import models  # noqa: F401
+    login_manager.init_app(app)
+    csrf.init_app(app)
 
+    from app import models  # noqa: F401
+    from app.auth import auth
     from app.routes import main
 
     app.register_blueprint(main)
+    app.register_blueprint(auth)
 
     return app

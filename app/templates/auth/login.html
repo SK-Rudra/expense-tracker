@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Log In | Expense Tracker{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-heading">
+            <p class="eyebrow">Welcome back</p>
+            <h1>Log in to your account</h1>
+            <p>
+                Continue managing your income and expenses.
+            </p>
+        </div>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(
+                    class="form-input",
+                    autocomplete="email",
+                    placeholder="you@example.com"
+                ) }}
+
+                {% for error in form.email.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(
+                    class="form-input",
+                    autocomplete="current-password",
+                    placeholder="Your password"
+                ) }}
+
+                {% for error in form.password.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="checkbox-row">
+                {{ form.remember() }}
+                {{ form.remember.label() }}
+            </div>
+
+            {{ form.submit(
+                class="button primary-button full-width"
+            ) }}
+        </form>
+
+        <p class="auth-footer-text">
+            Don’t have an account?
+            <a href="{{ url_for('auth.register') }}">
+                Create one
+            </a>
+        </p>
+    </div>
+</section>
+{% endblock %}
