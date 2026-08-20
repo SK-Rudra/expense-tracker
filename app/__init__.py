@@ -4,7 +4,7 @@ from flask import Flask
 
 from app.extensions import csrf, db, login_manager, migrate
 from config import Config
-
+from app.transactions import transactions
 
 def create_app():
     app = Flask(__name__)
@@ -23,5 +23,6 @@ def create_app():
 
     app.register_blueprint(main)
     app.register_blueprint(auth)
+    app.register_blueprint(transactions)
 
     return app

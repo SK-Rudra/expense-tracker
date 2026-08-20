@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard | Expense Tracker{% endblock %}
+{% block title %}Transactions | Expense Tracker{% endblock %}
 
 {% block content %}
-<section class="content-page dashboard-page">
+<section class="content-page">
     <div class="content-heading">
         <div>
-            <p class="page-label">{{ current_month|upper }}</p>
-            <h1>Welcome back, {{ current_user.name }}</h1>
-            <p>Here is an overview of your money this month.</p>
+            <p class="page-label">MONEY ACTIVITY</p>
+            <h1>Your transactions</h1>
+            <p>View and manage your income and expenses.</p>
         </div>
 
         <a
@@ -19,53 +19,8 @@
         </a>
     </div>
 
-    <div class="summary-grid">
-        <article class="summary-card summary-card-balance">
-            <p>Current balance</p>
-
-            <h2>
-                {% if balance < 0 %}-{% endif %}
-                ${{ "{:,.2f}".format(balance|abs) }}
-            </h2>
-
-            <span>Income minus expenses</span>
-        </article>
-
-        <article class="summary-card summary-card-income">
-            <p>Monthly income</p>
-            <h2>+${{ "{:,.2f}".format(income) }}</h2>
-            <span>Total income this month</span>
-        </article>
-
-        <article class="summary-card summary-card-expense">
-            <p>Monthly expenses</p>
-            <h2>-${{ "{:,.2f}".format(expenses) }}</h2>
-            <span>Total expenses this month</span>
-        </article>
-
-        <article class="summary-card summary-card-count">
-            <p>Transactions</p>
-            <h2>{{ monthly_transaction_count }}</h2>
-            <span>Recorded this month</span>
-        </article>
-    </div>
-
-    <div class="content-card dashboard-recent-card">
-        <div class="recent-heading">
-            <div>
-                <h2>Recent transactions</h2>
-                <p>Your five most recent records.</p>
-            </div>
-
-            <a
-                class="small-action-button"
-                href="{{ url_for('transactions.index') }}"
-            >
-                View all
-            </a>
-        </div>
-
-        {% if recent_transactions %}
+    <div class="content-card">
+        {% if transactions %}
             <div class="table-wrapper">
                 <table class="transaction-table">
                     <thead>
@@ -75,17 +30,19 @@
                             <th>Category</th>
                             <th>Type</th>
                             <th>Amount</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {% for transaction in recent_transactions %}
+                        {% for transaction in transactions %}
                             <tr>
                                 <td>
                                     {{ transaction.transaction_date.strftime("%d %b %Y") }}
                                 </td>
 
                                 <td>{{ transaction.description }}</td>
+
                                 <td>{{ transaction.category.name }}</td>
 
                                 <td>
@@ -106,6 +63,44 @@
                                     {% endif %}
                                     ${{ "{:,.2f}".format(transaction.amount) }}
                                 </td>
+
+                                <td>
+                                    <div class="table-actions">
+                                        <a
+                                            class="small-action-button"
+                                            href="{{ url_for(
+                                                'transactions.edit',
+                                                transaction_id=transaction.id
+                                            ) }}"
+                                        >
+                                            Edit
+                                        </a>
+
+                                        <form
+                                            method="post"
+                                            action="{{ url_for(
+                                                'transactions.delete',
+                                                transaction_id=transaction.id
+                                            ) }}"
+                                            onsubmit="return confirm(
+                                                'Are you sure you want to delete this transaction?'
+                                            );"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                value="{{ csrf_token() }}"
+                                            >
+
+                                            <button
+                                                class="small-action-button delete-button"
+                                                type="submit"
+                                            >
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -114,7 +109,7 @@
         {% else %}
             <div class="empty-state">
                 <h2>No transactions yet</h2>
-                <p>Add income or an expense to see your dashboard summary.</p>
+                <p>Add your first income or expense to start tracking your money.</p>
 
                 <a
                     class="action-button action-button-primary"

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Expense Tracker{% endblock %}
+
+{% block content %}
+<section class="content-page narrow-page">
+    <div class="content-heading">
+        <div>
+            <p class="page-label">TRANSACTION DETAILS</p>
+            <h1>{{ title }}</h1>
+            <p>Enter the transaction information below.</p>
+        </div>
+    </div>
+
+    <div class="content-card form-card">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="form-grid">
+                <div class="field-group">
+                    {{ form.kind.label }}
+
+                    {{ form.kind(class="form-control") }}
+
+                    {% for error in form.kind.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    {{ form.category_id.label }}
+
+                    {{ form.category_id(class="form-control") }}
+
+                    <small>
+                        Choose a category matching the transaction type.
+                    </small>
+
+                    {% for error in form.category_id.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    {{ form.amount.label }}
+
+                    {{ form.amount(
+                        class="form-control",
+                        placeholder="0.00",
+                        step="0.01"
+                    ) }}
+
+                    {% for error in form.amount.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    {{ form.transaction_date.label }}
+
+                    {{ form.transaction_date(class="form-control") }}
+
+                    {% for error in form.transaction_date.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group full-width-field">
+                    {{ form.description.label }}
+
+                    {{ form.description(
+                        class="form-control",
+                        placeholder="For example: Weekly groceries"
+                    ) }}
+
+                    {% for error in form.description.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                {{ form.submit(
+                    class="action-button action-button-primary"
+                ) }}
+
+                <a
+                    class="action-button action-button-secondary"
+                    href="{{ url_for('transactions.index') }}"
+                >
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

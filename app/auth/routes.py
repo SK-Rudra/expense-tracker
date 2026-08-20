@@ -8,7 +8,7 @@ from app.auth import auth
 from app.auth.forms import LoginForm, RegistrationForm
 from app.extensions import db
 from app.models import User
-
+from app.services.categories import ensure_default_categories
 
 def is_safe_redirect_target(target: str | None) -> bool:
     if not target:
@@ -38,6 +38,7 @@ def register():
         user.set_password(form.password.data)
 
         db.session.add(user)
+        ensure_default_categories(user)
 
         try:
             db.session.commit()
