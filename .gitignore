@@ -25,3 +25,7 @@ htmlcov/
 # Operating-system files
 .DS_Store
 Thumbs.db
+
+.pytest_cache/
+.coverage
+htmlcov/

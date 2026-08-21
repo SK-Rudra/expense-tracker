@@ -1,0 +1,13 @@
+[run]
+source = app
+branch = True
+
+[report]
+show_missing = True
+skip_covered = False
+precision = 1
+fail_under = 85
+
+exclude_lines =
+    pragma: no cover
+    if TYPE_CHECKING:
