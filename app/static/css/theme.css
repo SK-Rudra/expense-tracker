@@ -1,0 +1,244 @@
+/* Theme variables */
+
+:root {
+    color-scheme: light;
+
+    --theme-background: #f8fafc;
+    --theme-surface: #ffffff;
+    --theme-surface-muted: #f1f5f9;
+    --theme-text: #0f172a;
+    --theme-muted-text: #64748b;
+    --theme-border: #dbe3ee;
+    --theme-link: #2563eb;
+    --theme-input: #ffffff;
+    --theme-shadow: rgba(15, 23, 42, 0.1);
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --theme-background: #0b1120;
+    --theme-surface: #111827;
+    --theme-surface-muted: #172033;
+    --theme-text: #f1f5f9;
+    --theme-muted-text: #a7b3c5;
+    --theme-border: #29364d;
+    --theme-link: #60a5fa;
+    --theme-input: #172033;
+    --theme-shadow: rgba(0, 0, 0, 0.35);
+}
+
+
+/* Theme toggle button */
+
+.nav-links {
+    align-items: center;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.45rem 0.7rem;
+
+    color: var(--theme-text);
+    background: var(--theme-surface-muted);
+    border: 1px solid var(--theme-border);
+    border-radius: 0.5rem;
+
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--theme-link);
+    transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+    outline-offset: 2px;
+}
+
+
+/* Shared page colours */
+
+body {
+    color: var(--theme-text);
+    background-color: var(--theme-background);
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+a {
+    transition: color 0.2s ease;
+}
+
+html[data-theme="dark"] a {
+    color: var(--theme-link);
+}
+
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .site-footer {
+    background-color: var(--theme-surface);
+    border-color: var(--theme-border);
+}
+
+html[data-theme="dark"] .brand {
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .nav-links a,
+html[data-theme="dark"] .nav-user,
+html[data-theme="dark"] .nav-button {
+    color: var(--theme-text);
+}
+
+
+/* Headings and secondary text */
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] label,
+html[data-theme="dark"] th,
+html[data-theme="dark"] td {
+    color: var(--theme-text);
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] .page-label,
+html[data-theme="dark"] .content-heading p,
+html[data-theme="dark"] .balance-label,
+html[data-theme="dark"] .nav-user {
+    color: var(--theme-muted-text);
+}
+
+
+/* Main sections and cards */
+
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .hero-section,
+html[data-theme="dark"] .features-section,
+html[data-theme="dark"] .content-page,
+html[data-theme="dark"] .dashboard-page {
+    background-color: var(--theme-background);
+}
+
+html[data-theme="dark"] .balance-card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .content-card,
+html[data-theme="dark"] .form-card,
+html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .summary-card,
+html[data-theme="dark"] .dashboard-recent-card,
+html[data-theme="dark"] .category-form-panel,
+html[data-theme="dark"] .category-row,
+html[data-theme="dark"] .empty-state {
+    color: var(--theme-text);
+    background-color: var(--theme-surface);
+    border-color: var(--theme-border);
+    box-shadow: 0 1rem 2.5rem var(--theme-shadow);
+}
+
+
+/* Forms */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .form-control {
+    color: var(--theme-text);
+    background-color: var(--theme-input);
+    border-color: var(--theme-border);
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #8491a5;
+}
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] .form-control:focus {
+    border-color: #60a5fa;
+    outline-color: rgba(96, 165, 250, 0.35);
+}
+
+
+/* Secondary buttons */
+
+html[data-theme="dark"] .button-secondary,
+html[data-theme="dark"] .action-button-secondary,
+html[data-theme="dark"] .small-action-button {
+    color: var(--theme-text);
+    background-color: var(--theme-surface-muted);
+    border-color: var(--theme-border);
+}
+
+
+/* Tables */
+
+html[data-theme="dark"] .table-wrapper,
+html[data-theme="dark"] .transaction-table {
+    background-color: var(--theme-surface);
+    border-color: var(--theme-border);
+}
+
+html[data-theme="dark"] .transaction-table th {
+    background-color: var(--theme-surface-muted);
+}
+
+html[data-theme="dark"] .transaction-table th,
+html[data-theme="dark"] .transaction-table td {
+    border-color: var(--theme-border);
+}
+
+html[data-theme="dark"] .transaction-table tbody tr:hover {
+    background-color: var(--theme-surface-muted);
+}
+
+
+/* Flash messages */
+
+html[data-theme="dark"] .flash-success {
+    color: #86efac;
+    background-color: #052e16;
+    border-color: #166534;
+}
+
+html[data-theme="dark"] .flash-error,
+html[data-theme="dark"] .flash-danger {
+    color: #fca5a5;
+    background-color: #450a0a;
+    border-color: #991b1b;
+}
+
+html[data-theme="dark"] .flash-warning {
+    color: #fde68a;
+    background-color: #422006;
+    border-color: #92400e;
+}
+
+
+/* Respect reduced-motion accessibility settings */
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    a,
+    .theme-toggle {
+        transition: none;
+    }
+}
