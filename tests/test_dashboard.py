@@ -162,3 +162,66 @@ def test_dashboard_does_not_show_another_users_data(
 
     assert "Private first user expense" not in html
     assert "$400.00" not in html
+
+def test_home_shows_logged_in_users_current_month_totals(
+    client,
+    app,
+    auth,
+):
+    auth.register()
+
+    salary_id = get_user_category_id(
+        app,
+        "test@example.com",
+        "Salary",
+        "income",
+    )
+    food_id = get_user_category_id(
+        app,
+        "test@example.com",
+        "Food",
+        "expense",
+    )
+
+    today = date.today()
+    previous_month_date = today.replace(day=1) - timedelta(days=1)
+
+    post_transaction(
+        client,
+        salary_id,
+        "income",
+        "1200.00",
+        "Current income",
+        today,
+    )
+    post_transaction(
+        client,
+        food_id,
+        "expense",
+        "325.00",
+        "Current expense",
+        today,
+    )
+    post_transaction(
+        client,
+        food_id,
+        "expense",
+        "999.00",
+        "Previous expense",
+        previous_month_date,
+    )
+
+    response = client.get("/")
+    html = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert re.search(r"<h2>\s*\$875\.00\s*</h2>", html)
+    assert re.search(
+        r'class="income">\s*\$1,200\.00\s*</strong>',
+        html,
+    )
+    assert re.search(
+        r'class="expense">\s*\$325\.00\s*</strong>',
+        html,
+    )
+    assert "$999.00" not in html
