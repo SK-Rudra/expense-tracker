@@ -23,3 +23,19 @@ def test_health_check(client):
 
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
+
+def test_dark_mode_assets_are_available(client):
+    response = client.get("/")
+    html = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert 'data-theme="light"' in html
+    assert 'id="theme-toggle"' in html
+    assert "/static/css/theme.css" in html
+    assert "/static/js/theme.js" in html
+
+    css_response = client.get("/static/css/theme.css")
+    javascript_response = client.get("/static/js/theme.js")
+
+    assert css_response.status_code == 200
+    assert javascript_response.status_code == 200
