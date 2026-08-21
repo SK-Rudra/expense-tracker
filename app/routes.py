@@ -17,6 +17,9 @@ main = Blueprint("main", __name__)
 def home():
     return render_template("home.html")
 
+@main.route("/health")
+def health():
+    return {"status": "ok"}, 200
 
 @main.route("/dashboard")
 @login_required

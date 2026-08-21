@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: sk-rudra-expense-tracker
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+
+    buildCommand: >-
+      python -m pip install --upgrade pip &&
+      python -m pip install -r requirements.txt
+
+    startCommand: >-
+      python -m flask --app run.py db upgrade &&
+      gunicorn
+      --bind 0.0.0.0:$PORT
+      --workers 2
+      --timeout 120
+      --access-logfile -
+      --error-logfile -
+      run:app
+
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass
+
+    envVars:
+      - key: APP_ENV
+        value: production
+
+      - key: SECRET_KEY
+        generateValue: true
+
+      - key: DATABASE_URL
+        sync: false
