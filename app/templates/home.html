@@ -44,16 +44,26 @@
 
     <div class="summary-card">
         <p>Current monthly balance</p>
-        <h2>$0.00</h2>
+
+        <h2>
+            {% if balance < 0 %}-{% endif %}
+            ${{ "{:,.2f}".format(balance|abs) }}
+        </h2>
 
         <div class="summary-row">
             <span>Income</span>
-            <strong class="income">$0.00</strong>
+
+            <strong class="income">
+                ${{ "{:,.2f}".format(income) }}
+            </strong>
         </div>
 
         <div class="summary-row">
             <span>Expenses</span>
-            <strong class="expense">$0.00</strong>
+
+            <strong class="expense">
+                ${{ "{:,.2f}".format(expenses) }}
+            </strong>
         </div>
     </div>
 </section>
