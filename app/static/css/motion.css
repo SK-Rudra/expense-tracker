@@ -1,0 +1,395 @@
+/* ==========================================================================
+   Expense Tracker motion layer
+
+   This file contains decorative motion only. Removing it does not affect the
+   layout, theme, forms, database features, or accessibility of the app.
+   ========================================================================== */
+
+:root {
+    --ambient-primary: rgba(14, 111, 92, 0.2);
+    --ambient-secondary: rgba(198, 150, 59, 0.16);
+    --ambient-sheen: rgba(255, 255, 255, 0.05);
+    --glow-ring: rgba(14, 111, 92, 0.42);
+}
+
+html[data-theme="dark"] {
+    --ambient-primary: rgba(52, 211, 153, 0.2);
+    --ambient-secondary: rgba(245, 190, 81, 0.17);
+    --ambient-sheen: rgba(255, 255, 255, 0.035);
+    --glow-ring: rgba(52, 211, 153, 0.45);
+}
+
+
+/* Animated Home background */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-image: linear-gradient(
+        115deg,
+        transparent 35%,
+        var(--ambient-sheen) 50%,
+        transparent 65%
+    );
+    background-repeat: no-repeat;
+    background-position: -20% -20%;
+    background-size: 260% 260%;
+    animation: ambient-sheen-sweep 14s linear infinite;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.hero::before,
+.hero::after {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: clamp(22rem, 44vw, 42rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+    will-change: transform;
+}
+
+.hero::before {
+    top: -55%;
+    right: -15%;
+    background: radial-gradient(
+        circle,
+        var(--ambient-primary) 0%,
+        transparent 68%
+    );
+    animation: ambient-float-primary 18s ease-in-out infinite;
+}
+
+.hero::after {
+    bottom: -60%;
+    left: -12%;
+    background: radial-gradient(
+        circle,
+        var(--ambient-secondary) 0%,
+        transparent 70%
+    );
+    animation: ambient-float-secondary 22s ease-in-out infinite;
+}
+
+@keyframes ambient-float-primary {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(-3rem, 2rem, 0) scale(1.14);
+    }
+}
+
+@keyframes ambient-float-secondary {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(4rem, -2rem, 0) scale(1.18);
+    }
+}
+
+@keyframes ambient-sheen-sweep {
+    0% {
+        background-position: -20% -20%;
+    }
+
+    100% {
+        background-position: 120% 120%;
+    }
+}
+
+
+/* Page entrance animations */
+
+.hero-content {
+    animation: reveal-rise 0.7s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero > .summary-card {
+    animation: reveal-rise 0.7s 0.12s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.content-heading {
+    animation: reveal-rise 0.6s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.summary-grid,
+.form-card,
+.content-card,
+.category-layout,
+.empty-state {
+    animation: reveal-rise 0.65s 0.1s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.summary-grid > *,
+.category-layout > * {
+    animation: reveal-rise-scale 0.55s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.summary-grid > *:nth-child(1),
+.category-layout > *:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.summary-grid > *:nth-child(2),
+.category-layout > *:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.summary-grid > *:nth-child(3),
+.category-layout > *:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.summary-grid > *:nth-child(4),
+.category-layout > *:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.summary-grid > *:nth-child(n + 5),
+.category-layout > *:nth-child(n + 5) {
+    animation-delay: 0.24s;
+}
+
+.flash-message {
+    animation: notification-arrival 0.45s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes reveal-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 1.25rem, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes reveal-rise-scale {
+    from {
+        opacity: 0;
+        filter: blur(3px);
+        transform: translate3d(0, 1rem, 0) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes notification-arrival {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -0.75rem, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+
+/* Mouse and trackpad hover motion */
+
+@media (hover: hover) and (pointer: fine) {
+    .summary-card,
+    .feature-card,
+    .category-row,
+    .metric-card {
+        transition:
+            translate 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .summary-card:hover,
+    .feature-card:hover,
+    .category-row:hover,
+    .metric-card:hover {
+        translate: 0 -0.3rem;
+        box-shadow:
+            0 1.25rem 2.75rem
+                var(--theme-shadow, rgba(20, 24, 31, 0.16)),
+            0 0 0 1px var(--glow-ring);
+    }
+
+    .button,
+    .action-button,
+    .small-action-button,
+    .nav-register,
+    .nav-button {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        transition:
+            translate 0.2s ease,
+            scale 0.15s ease,
+            box-shadow 0.2s ease,
+            filter 0.2s ease;
+    }
+
+    .button:hover,
+    .action-button:hover,
+    .small-action-button:hover,
+    .nav-register:hover,
+    .nav-button:hover {
+        transform: none;
+        translate: 0 -0.15rem;
+        filter: brightness(1.04);
+    }
+
+    .button::after,
+    .action-button::after,
+    .small-action-button::after,
+    .nav-register::after,
+    .nav-button::after {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background: linear-gradient(
+            115deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.22) 50%,
+            transparent 70%
+        );
+        background-position: -100% -100%;
+        background-size: 250% 250%;
+        opacity: 0;
+        transition:
+            opacity 0.2s ease,
+            background-position 0.5s ease;
+    }
+
+    .button:hover::after,
+    .action-button:hover::after,
+    .small-action-button:hover::after,
+    .nav-register:hover::after,
+    .nav-button:hover::after {
+        opacity: 1;
+        background-position: 100% 100%;
+    }
+}
+
+
+/* Press feedback */
+
+.button:active,
+.action-button:active,
+.small-action-button:active,
+.nav-register:active,
+.nav-button:active,
+.theme-toggle:active {
+    transform: none;
+    translate: 0;
+    scale: 0.97;
+}
+
+
+/* Keyboard focus */
+
+.button:focus-visible,
+.action-button:focus-visible,
+.small-action-button:focus-visible,
+.nav-register:focus-visible,
+.nav-button:focus-visible,
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--glow-ring);
+    outline-offset: 3px;
+}
+
+
+/* Reduced-motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero,
+    .hero::before,
+    .hero::after,
+    .hero-content,
+    .hero > .summary-card,
+    .content-heading,
+    .summary-grid,
+    .form-card,
+    .content-card,
+    .category-layout,
+    .empty-state,
+    .summary-grid > *,
+    .category-layout > *,
+    .flash-message {
+        animation: none;
+    }
+
+    .summary-card,
+    .feature-card,
+    .category-row,
+    .metric-card,
+    .button,
+    .action-button,
+    .small-action-button,
+    .nav-register,
+    .nav-button,
+    .theme-toggle {
+        transition: none;
+    }
+
+    .summary-card:hover,
+    .feature-card:hover,
+    .category-row:hover,
+    .metric-card:hover,
+    .button:hover,
+    .action-button:hover,
+    .small-action-button:hover,
+    .nav-register:hover,
+    .nav-button:hover,
+    .theme-toggle:hover,
+    .button:active,
+    .action-button:active,
+    .small-action-button:active,
+    .nav-register:active,
+    .nav-button:active,
+    .theme-toggle:active {
+        transform: none;
+        translate: none;
+        scale: none;
+        filter: none;
+    }
+
+    .button::after,
+    .action-button::after,
+    .small-action-button::after,
+    .nav-register::after,
+    .nav-button::after,
+    .button:hover::after,
+    .action-button:hover::after,
+    .small-action-button:hover::after,
+    .nav-register:hover::after,
+    .nav-button:hover::after {
+        opacity: 0;
+        background-position: -100% -100%;
+        transition: none;
+    }
+}

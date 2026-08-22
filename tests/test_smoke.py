@@ -39,3 +39,15 @@ def test_dark_mode_assets_are_available(client):
 
     assert css_response.status_code == 200
     assert javascript_response.status_code == 200
+
+def test_motion_stylesheet_is_available(client):
+    response = client.get("/")
+    html = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert "/static/css/motion.css" in html
+
+    motion_response = client.get("/static/css/motion.css")
+
+    assert motion_response.status_code == 200
+    assert b"prefers-reduced-motion" in motion_response.data
